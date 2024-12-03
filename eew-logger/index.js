@@ -26,11 +26,11 @@ class Plugin {
 	onLoad() {
 		const { TREM, info, logger, utils } = this.#ctx;
 
-		const defaultDir = utils.path.join(info.pluginDir, "./resource/default.yml");
-		const configDir = utils.path.join(info.pluginDir, "./config.yml");
+		const defaultDir = utils.path.join(info.pluginDir, "./EEW-Logger/resource/default.yml");
+		const configDir = utils.path.join(info.pluginDir, "./EEW-Logger/config.yml");
 
 		this.logger = logger;
-		this.#config = new config(this.logger, defaultDir, configDir);
+		this.#config = new config("EEW-Logger", this.logger, defaultDir, configDir);
 		this.config = this.#config.getConfig();
 
 		const args_info_path = utils.path.join(__dirname, "logger");
