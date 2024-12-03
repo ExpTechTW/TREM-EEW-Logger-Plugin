@@ -23,6 +23,17 @@ class Plugin {
 		return Plugin.instance;
 	}
 
+	runEEWLogger(TREM, utils, args_info_path, ans) {
+		const list = utils.fs.readdirSync(args_info_path);
+		for (let i = 0; i < list.length; i++) {
+			const date = utils.fs.statSync(`${args_info_path}/${list[i]}`);
+			if (Date.now() - date.ctimeMs > 86400 * this.config.maximum_storage_day * 1000) utils.fs.unlinkSync(`${args_info_path}/${list[i]}`);
+		}
+
+		if (TREM.variable.play_mode == 2 || TREM.variable.play_mode == 3) return;
+		utils.fs.writeFileSync(`${args_info_path}/${ans.data.time}.json`, JSON.stringify(ans));
+	}
+
 	onLoad() {
 		const { TREM, info, logger, utils } = this.#ctx;
 
@@ -37,20 +48,9 @@ class Plugin {
 
 		if (!utils.fs.existsSync(args_info_path)) utils.fs.mkdirSync(args_info_path);
 
-		function runEEWLogger(ans) {
-			const list = utils.fs.readdirSync(args_info_path);
-			for (let i = 0; i < list.length; i++) {
-				const date = utils.fs.statSync(`${args_info_path}/${list[i]}`);
-				if (Date.now() - date.ctimeMs > 86400 * this.config.maximum_storage_day * 1000) utils.fs.unlinkSync(`${args_info_path}/${list[i]}`);
-			}
-
-			if (TREM.variable.play_mode == 2 || TREM.variable.play_mode == 3) return;
-			utils.fs.writeFileSync(`${args_info_path}/${ans.data.time}.json`, JSON.stringify(ans));
-		}
-
-		TREM.variable.events.on("EewRelease", (ans) => runEEWLogger(ans));
-		TREM.variable.events.on("EewUpdate", (ans) => runEEWLogger(ans));
-		TREM.variable.events.on("EewEnd", (ans) => runEEWLogger(ans));
+		TREM.variable.events.on("EewRelease", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
+		TREM.variable.events.on("EewUpdate", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
+		TREM.variable.events.on("EewEnd", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
 	}
   }
 
