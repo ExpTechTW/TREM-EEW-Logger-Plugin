@@ -41,16 +41,18 @@ class Plugin {
 		const configDir = utils.path.join(info.pluginDir, "./EEW-Logger/config.yml");
 
 		this.logger = logger;
-		this.#config = new config("EEW-Logger", this.logger, defaultDir, configDir);
+		this.#config = new config("EEW-Logger", this.logger, utils.fs, defaultDir, configDir);
 		this.config = this.#config.getConfig();
 
 		const args_info_path = utils.path.join(__dirname, "logger");
 
 		if (!utils.fs.existsSync(args_info_path)) utils.fs.mkdirSync(args_info_path);
 
-		TREM.variable.events.on("EewRelease", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
-		TREM.variable.events.on("EewUpdate", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
-		TREM.variable.events.on("EewEnd", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
+		const event = (event, callback) => TREM.variable.events.on(event, callback);
+
+		// event("EewRelease", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
+		// event("EewUpdate", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
+		// event("EewEnd", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
 	}
   }
 
