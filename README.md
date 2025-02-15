@@ -1,4 +1,4 @@
-## TREM-EEW-Logger-Plugin
+# TREM-EEW-Logger-Plugin
 EEW 原始資料 紀錄器
 
 <div align="center">
@@ -8,6 +8,14 @@ EEW 原始資料 紀錄器
 <a href="https://discord.gg/5dbHqV8ees"><img alt="ExpTech Studio"  src="https://img.shields.io/discord/926545182407688273?color=%235865F2&logo=discord&logoColor=white"></a>
 <img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/ExpTechTW/TREM-EEW-Logger-Plugin/total">
 </div>
+
+## 索引
+- [簡介](#簡介)
+- [安裝方式](#安裝方式)
+- [開放原始碼授權](#開放原始碼授權)
+- [貢獻者](#貢獻者)
+- [發佈規則](#發佈規則)
+- [合作](#合作)
 
 ## 簡介
 
@@ -23,11 +31,6 @@ TREM-EEW-Logger-Plugin 適用於 TREM-Lite 3.1.0 以上版本。EEW 原始資料
 ## 開放原始碼授權
 
 開放原始碼授權資訊請詳見 [LICENSE](LICENSE) 檔案
-
-## 索引
-- [貢獻者](#貢獻者)
-- [發佈規則](#發佈規則)
-- [合作](#合作)
 
 ## 貢獻者
 - yayacat `文檔` `程式`
