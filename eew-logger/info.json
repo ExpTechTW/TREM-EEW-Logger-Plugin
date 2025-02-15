@@ -3,7 +3,8 @@
   "version": "1.0.6",
   "author": ["yayacat"],
   "description": {
-    "zh_tw": "EEW 原始資料 紀錄器"
+    "zh_tw": "EEW 原始資料 紀錄器",
+    "zh-Hant": "EEW 原始資料 紀錄器"
   },
   "dependencies": {
     "trem": ">=3.1.0",
