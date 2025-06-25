@@ -31,28 +31,29 @@ class Plugin {
 		}
 
 		if (TREM.variable.play_mode == 2 || TREM.variable.play_mode == 3) return;
-		utils.fs.writeFileSync(`${args_info_path}/${ans.data.time}.json`, JSON.stringify(ans));
+		if (ans.info.type == 2 || ans.info.type == 3) return;
+		utils.fs.writeFileSync(`${args_info_path}/${Date.now()}.json`, JSON.stringify(ans.data));
 	}
 
 	onLoad() {
 		const { TREM, info, logger, utils } = this.#ctx;
 
-		const defaultDir = utils.path.join(info.pluginDir, "./EEW-Logger/resource/default.yml");
-		const configDir = utils.path.join(info.pluginDir, "./EEW-Logger/config.yml");
+		const defaultDir = utils.path.join(info.pluginDir, "./eew-logger/resource/default.yml");
+		const configDir = utils.path.join(info.pluginDir, "./eew-logger/config.yml");
 
 		this.logger = logger;
-		this.#config = new config("EEW-Logger", this.logger, utils.fs, defaultDir, configDir);
+		this.#config = new config("eew-logger", this.logger, utils.fs, defaultDir, configDir);
 		this.config = this.#config.getConfig();
 
-		const args_info_path = utils.path.join(__dirname, "logger");
+		const args_info_path = utils.path.join(info.pluginDir, "../logger/eew");
 
 		if (!utils.fs.existsSync(args_info_path)) utils.fs.mkdirSync(args_info_path);
 
 		const event = (event, callback) => TREM.variable.events.on(event, callback);
 
-		// event("EewRelease", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
-		// event("EewUpdate", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
-		// event("EewEnd", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
+		event("EewRelease", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
+		event("EewUpdate", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
+		event("EewEnd", (ans) => this.runEEWLogger(TREM, utils, args_info_path, ans));
 	}
   }
 
