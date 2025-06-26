@@ -25,9 +25,11 @@ class Plugin {
 
 	runEEWLogger(TREM, utils, args_info_path, ans) {
 		const list = utils.fs.readdirSync(args_info_path);
-		for (let i = 0; i < list.length; i++) {
-			const date = utils.fs.statSync(`${args_info_path}/${list[i]}`);
-			if (Date.now() - date.ctimeMs > 86400 * this.config.maximum_storage_day * 1000) utils.fs.unlinkSync(`${args_info_path}/${list[i]}`);
+		if (this.config.maximum_storage_day != 0) {
+			for (let i = 0; i < list.length; i++) {
+				const date = utils.fs.statSync(`${args_info_path}/${list[i]}`);
+				if (Date.now() - date.ctimeMs > 86400 * this.config.maximum_storage_day * 1000) utils.fs.unlinkSync(`${args_info_path}/${list[i]}`);
+			}
 		}
 
 		if (TREM.variable.play_mode == 2 || TREM.variable.play_mode == 3) return;
