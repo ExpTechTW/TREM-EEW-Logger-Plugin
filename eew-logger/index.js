@@ -49,7 +49,7 @@ class Plugin {
 
 		const args_info_path = utils.path.join(info.pluginDir, "../logger/eew");
 
-		if (!utils.fs.existsSync(args_info_path)) utils.fs.mkdirSync(args_info_path);
+		if (!utils.fs.existsSync(args_info_path)) utils.fs.mkdirSync(args_info_path, { recursive: true });
 
 		const event = (event, callback) => TREM.variable.events.on(event, callback);
 
